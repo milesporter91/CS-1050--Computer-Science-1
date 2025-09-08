@@ -32,7 +32,6 @@ public class PorterM01Calculations {
 		projectsGrade = kb.nextDouble();
 		System.out.println("Please enter your grade for Final Demonstration of Learning: ");
 		finalDemonstrationOfLearningGrade = kb.nextDouble();
-		
 		double finalGrade = calculateGrade(participationGrade, guidedExplorationGrade, quizzesGrade, projectsGrade, finalDemonstrationOfLearningGrade);
 		System.out.printf("Your final grade based on the provided weighted grades is %.2f", finalGrade);
 		
@@ -47,8 +46,8 @@ public class PorterM01Calculations {
 		final double FINAL_DEMONSTRATION_OF_LEARNING_WEIGHT = 0.20;
 		
 		double grade = (participationGrade * PARTICIPATION_WEIGHT) + (guidedExplorationsGrade * GUIDED_EXPLORATION_WEIGHT)
-															+ (quizzesGrade * QUIZZES_WEIGHT) + (projectsGrade * PROJECTS_WEIGHT)
-															+ (finalDemonstrationOfLearningGrade * FINAL_DEMONSTRATION_OF_LEARNING_WEIGHT);
+				+ (quizzesGrade * QUIZZES_WEIGHT) + (projectsGrade * PROJECTS_WEIGHT)
+				+ (finalDemonstrationOfLearningGrade * FINAL_DEMONSTRATION_OF_LEARNING_WEIGHT);
 		
 		return grade;
 		
