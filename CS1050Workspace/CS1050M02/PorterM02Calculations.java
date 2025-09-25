@@ -1,4 +1,4 @@
-package cs1050Classwork;
+
 
 import java.util.Scanner;
 
@@ -6,12 +6,21 @@ import java.util.Scanner;
  * Name: Miles Porter
  * Class: CS1050 M/W
  * Description: Guided Exploration 02
- * The program will then calculate a final grade for the class based on provided weights for grades
+ * The program will take input from the student for name and grades, 
+ * then calculate a final grade for the class based on provided weights for grades,
+ * and output the students initials and grade.
  */
 
-public class PorterM01Calculations {
+public class PorterM02Calculations {
 	public static void main(String[] args) {
+		final double PARTICIPATION_WEIGHT = 0.15;
+		final double GUIDED_EXPLORATION_WEIGHT = 0.20;
+		final double QUIZZES_WEIGHT = 0.25;
+		final double PROJECTS_WEIGHT = 0.20;
+		final double FINAL_DEMONSTRATION_OF_LEARNING_WEIGHT = 0.20;
 		double participationGrade, guidedExplorationGrade, quizzesGrade, projectsGrade, finalDemonstrationOfLearningGrade;
+		char letterGrade = '~';
+		
 		Scanner kb = new Scanner(System.in);
 		System.out.println("Please enter your first name.");
 		String firstName = kb.nextLine();
@@ -20,8 +29,7 @@ public class PorterM01Calculations {
 		String lastName = kb.nextLine();
 		char lastInitial = lastName.charAt(0);
 		String studentInitials = firstInitial + "." + lastInitial + ".";
-		System.out.println();
-		System.out.println("Lets calculate grades!");
+		System.out.println("\nLets calculate grades!");
 		System.out.println("Please enter your grade for Participation: ");
 		participationGrade = kb.nextDouble();
 		System.out.println("Please enter your grade for Guided Explorations: ");
@@ -32,24 +40,27 @@ public class PorterM01Calculations {
 		projectsGrade = kb.nextDouble();
 		System.out.println("Please enter your grade for Final Demonstration of Learning: ");
 		finalDemonstrationOfLearningGrade = kb.nextDouble();
-		double finalGrade = calculateGrade(participationGrade, guidedExplorationGrade, quizzesGrade, projectsGrade, finalDemonstrationOfLearningGrade);
-		System.out.printf("Your final grade based on the provided weighted grades is %.2f", finalGrade);
+		double grade = (participationGrade * PARTICIPATION_WEIGHT) + (guidedExplorationGrade * GUIDED_EXPLORATION_WEIGHT)
+				+ (quizzesGrade * QUIZZES_WEIGHT) + (projectsGrade * PROJECTS_WEIGHT)
+				+ (finalDemonstrationOfLearningGrade * FINAL_DEMONSTRATION_OF_LEARNING_WEIGHT);
+		if (grade < 60) { 
+			letterGrade = 'F';
+		} else if (grade >= 60 && grade < 70 ) {
+			letterGrade = 'D';
+		} else if (grade >= 70 && grade < 80 ) {
+			letterGrade = 'C';
+		} else if (grade >= 80 && grade < 90 ) {
+			letterGrade = 'B';
+		} else if (grade >= 90) {
+			letterGrade = 'A';
+		}
+		System.out.printf(firstName + " " + lastName + " %.2f " + letterGrade, grade);
+		if(grade < 75) {
+			System.out.println();
+			System.out.println(studentInitials + " Please come to office hours.");
+		}
 		
 		kb.close();
 	}
-	
-	public static Double calculateGrade(double participationGrade, double guidedExplorationsGrade, double quizzesGrade, double projectsGrade, double finalDemonstrationOfLearningGrade ) {
-		final double PARTICIPATION_WEIGHT = 0.15;
-		final double GUIDED_EXPLORATION_WEIGHT = 0.20;
-		final double QUIZZES_WEIGHT = 0.25;
-		final double PROJECTS_WEIGHT = 0.20;
-		final double FINAL_DEMONSTRATION_OF_LEARNING_WEIGHT = 0.20;
-		
-		double grade = (participationGrade * PARTICIPATION_WEIGHT) + (guidedExplorationsGrade * GUIDED_EXPLORATION_WEIGHT)
-				+ (quizzesGrade * QUIZZES_WEIGHT) + (projectsGrade * PROJECTS_WEIGHT)
-				+ (finalDemonstrationOfLearningGrade * FINAL_DEMONSTRATION_OF_LEARNING_WEIGHT);
-		
-		return grade;
-		
-	}
+
 }
