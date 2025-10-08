@@ -20,7 +20,7 @@ public class PorterM01Calculations {
 		String lastName = kb.nextLine();
 		char lastInitial = lastName.charAt(0);
 		String studentInitials = firstInitial + "." + lastInitial + ".";
-		System.out.println();
+		System.out.println(studentInitials);
 		System.out.println("Lets calculate grades!");
 		System.out.println("Please enter your grade for Participation: ");
 		participationGrade = kb.nextDouble();

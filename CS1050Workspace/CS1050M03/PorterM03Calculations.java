@@ -6,34 +6,38 @@ public class PorterM03Calculations {
 		Scanner kb = new Scanner(System.in);
 		String username = "teacher";
 		String password = "password";
-		boolean keepCalculatingGrades = true;
+		final int MIN_GRADE = 0;
+		final int MAX_GRADE = 105;
+		boolean keepCalculatingGrades = false;
 
 		boolean loggedIn = login(username, password, kb);
 		if (loggedIn) {
 			programStartUpMessage();
-
-			while (keepCalculatingGrades) {
-				final int MIN_GRADE = 0;
-				final int MAX_GRADE = 105;
-				System.out.println("Please enter a grade for Participation");
-				double participationGrade = getValidGrade(MIN_GRADE, MAX_GRADE, kb);
-				System.out.println("Please enter a grade for Guided Exploration");
-				double guidedExplorationGrade = getValidGrade(MIN_GRADE, MAX_GRADE, kb);
-				System.out.println("Please enter a grade for Quizzes");
-				double quizzesGrade = getValidGrade(MIN_GRADE, MAX_GRADE, kb);
-				System.out.println("Please enter a grade for Projects");
-				double projectsGrade = getValidGrade(MIN_GRADE, MAX_GRADE, kb);
-				System.out.println("Please enter a grade for Final Exam");
-				double finalDemonstrationOfLearningGrade = getValidGrade(MIN_GRADE, MAX_GRADE, kb);
-				double grade = calculateGradeAverage(participationGrade, guidedExplorationGrade, quizzesGrade,
-						projectsGrade, finalDemonstrationOfLearningGrade);
+			do {
+				double grade = getGrades(MIN_GRADE, MAX_GRADE, kb);
 				printGrades(grade);
 				System.out.println();
 				keepCalculatingGrades = doMoreGrades(kb);
-				
-			}
+			} while (keepCalculatingGrades);
 		}
 		kb.close();
+	}
+	
+	public static double getGrades(int minimumGrade, int maximumGrade, Scanner kb) {
+		System.out.println("Please enter a grade for Participation");
+		double participationGrade = getValidGrade(minimumGrade, maximumGrade, kb);
+		System.out.println("Please enter a grade for Guided Exploration");
+		double guidedExplorationGrade = getValidGrade(minimumGrade, maximumGrade, kb);
+		System.out.println("Please enter a grade for Quizzes");
+		double quizzesGrade = getValidGrade(minimumGrade, maximumGrade, kb);
+		System.out.println("Please enter a grade for Projects");
+		double projectsGrade = getValidGrade(minimumGrade, maximumGrade, kb);
+		System.out.println("Please enter a grade for Final Exam");
+		double finalDemonstrationOfLearningGrade = getValidGrade(minimumGrade, maximumGrade, kb);
+		double grade = calculateGradeAverage(participationGrade, guidedExplorationGrade, quizzesGrade,
+				projectsGrade, finalDemonstrationOfLearningGrade);
+		
+		return grade;
 	}
 	
 	public static boolean doMoreGrades(Scanner kb) {
@@ -57,6 +61,7 @@ public class PorterM03Calculations {
 		boolean loggedIn = false;
 		boolean validUsername = false;
 		int failedLoginAttempts = 0;
+		int maxLoginAttempts = 3;
 		while (failedLoginAttempts < 3 && loggedIn == false) {
 			while (!validUsername) {
 				System.out.println("Please enter username:");
@@ -64,7 +69,7 @@ public class PorterM03Calculations {
 				if (username.equals(correctUsername)) {
 					validUsername = true;
 				} else {
-					if (failedLoginAttempts < 3) {
+					if (failedLoginAttempts < maxLoginAttempts) {
 						System.out.println("Incorrect username.");
 					}
 				}
@@ -75,14 +80,14 @@ public class PorterM03Calculations {
 				if (password.equals(correctPassword)) {
 					loggedIn = true;
 				} else {
-					if (failedLoginAttempts < 3) {
+					if (failedLoginAttempts < maxLoginAttempts) {
 						System.out.println("Incorrect password.");
 					}
 				}
 			}
 			if (loggedIn == false) {
 				failedLoginAttempts++;
-				if (failedLoginAttempts == 3) {
+				if (failedLoginAttempts == maxLoginAttempts) {
 					System.out.println("Too many failed login attempts. Program terminating.");
 				}
 			}

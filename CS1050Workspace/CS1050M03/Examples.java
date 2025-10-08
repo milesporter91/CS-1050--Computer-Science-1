@@ -22,6 +22,81 @@ public class Examples {
 		}
 		System.out.println("Loop count: " + loopCount); // loopCount = 8
 		
+		for (int outerLoop = 1; outerLoop <= 5; outerLoop++) {
+			System.out.println();
+			for (int innerLoop = 1; innerLoop <= 5; innerLoop++) {
+				System.out.println("Outer Loop #" + outerLoop + " Inner Loop #" + innerLoop);
+			}
+		}
+		int outerLoop = 1;
+		while (outerLoop <= 5) {
+			int innerLoop = 1;
+			while (innerLoop <= 5) {
+				System.out.println("Outer: " + outerLoop + " Inner: " + innerLoop);
+				innerLoop++;
+			}
+			outerLoop++;
+			System.out.println();
+		}
+		// For each iteration of outerLoop, innerLoop will iterate 5 times; this should result in 25 lines being printed throughout the loop
+		
+		int sum = sumMethod(5, 2); // passes the values 5 and 2 to the sumMethod, assigns returned value to sum
+		
+		System.out.println(gaussMethod(100));
+		System.out.println(gaussMethod(10));
+		System.out.println(gaussMethod(5));
+		
+		getMoreEfficientAlgorithm();
+		
+		String startingString = "SquarePants";
+		methodOutputs(startingString);
+		System.out.println("String after method: " + startingString);
+	}
+	
+	public static void methodOutputs(String StringParameterInput) {
+		int stringLength = StringParameterInput.length();
+		
+		for (int i = (stringLength - 1); i >= 0; i--) {
+			char currentChar = StringParameterInput.charAt(i);
+			if (currentChar == 'a' || currentChar == 'e' || currentChar == 'i'
+					|| currentChar == 'o' || currentChar == 'u') {
+				currentChar = Character.toLowerCase(currentChar);
+			} else {
+				currentChar = Character.toUpperCase(currentChar);
+			}
+			System.out.print(currentChar);
+		}
+		System.out.println();
+	}
+	
+	
+	public static int sumMethod(int a, int b) {
+		int sum = a + b; // adds the values that were passed and stores them in an int called sum
+		printSum(sum); // passes sum to printSum method
+		return sum; // returns the sum
+	}
+	
+	public static void printSum(int sum) {
+		//        ^ void return means nothing is returned by the method
+		System.out.println("The sum is " + sum); // outputs the message and the sum that was passed to it
+	}
+	
+	public static int gaussMethod(int max) {
+		int sum = 0;
+		sum = (max + 1) * max / 2;
+		return sum;
+	}
+	
+	public static void getMoreEfficientAlgorithm() {
+		double algorithmA = 0.1;
+		double algorithmB = 0.0;
+		double n = 1;
+		
+		for (n = 1; algorithmA > algorithmB; n++ ) {
+			algorithmA = 100 * (n*n);
+			algorithmB = 0.01 * Math.pow(2.0, n);
+		}
+		System.out.println("When n = " + n + ", A's work = " + algorithmA + ", and B's work = " + algorithmB);
 	}
 		
 }
