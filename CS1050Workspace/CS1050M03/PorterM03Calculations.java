@@ -61,15 +61,15 @@ public class PorterM03Calculations {
 		boolean loggedIn = false;
 		boolean validUsername = false;
 		int failedLoginAttempts = 0;
-		int maxLoginAttempts = 3;
-		while (failedLoginAttempts < 3 && loggedIn == false) {
+		final int MAX_LOGIN_ATTEMPTS = 3;
+		while (failedLoginAttempts < MAX_LOGIN_ATTEMPTS && loggedIn == false) {
 			while (!validUsername) {
 				System.out.println("Please enter username:");
 				String username = kb.next();
 				if (username.equals(correctUsername)) {
 					validUsername = true;
 				} else {
-					if (failedLoginAttempts < maxLoginAttempts) {
+					if (failedLoginAttempts < MAX_LOGIN_ATTEMPTS) {
 						System.out.println("Incorrect username.");
 					}
 				}
@@ -80,14 +80,14 @@ public class PorterM03Calculations {
 				if (password.equals(correctPassword)) {
 					loggedIn = true;
 				} else {
-					if (failedLoginAttempts < maxLoginAttempts) {
+					if (failedLoginAttempts < MAX_LOGIN_ATTEMPTS) {
 						System.out.println("Incorrect password.");
 					}
 				}
 			}
 			if (loggedIn == false) {
 				failedLoginAttempts++;
-				if (failedLoginAttempts == maxLoginAttempts) {
+				if (failedLoginAttempts == MAX_LOGIN_ATTEMPTS) {
 					System.out.println("Too many failed login attempts. Program terminating.");
 				}
 			}
