@@ -6,15 +6,13 @@ public class PorterM03Calculations {
 		Scanner kb = new Scanner(System.in);
 		String username = "teacher";
 		String password = "password";
-		final int MIN_GRADE = 0;
-		final int MAX_GRADE = 105;
 		boolean keepCalculatingGrades = false;
 
 		boolean loggedIn = login(username, password, kb);
 		if (loggedIn) {
 			programStartUpMessage();
 			do {
-				double grade = getGrades(MIN_GRADE, MAX_GRADE, kb);
+				double grade = getGrades( kb);
 				printGrades(grade);
 				System.out.println();
 				keepCalculatingGrades = doMoreGrades(kb);
@@ -23,17 +21,17 @@ public class PorterM03Calculations {
 		kb.close();
 	}
 	
-	public static double getGrades(int minimumGrade, int maximumGrade, Scanner kb) {
+	public static double getGrades(Scanner kb) {
 		System.out.println("Please enter a grade for Participation");
-		double participationGrade = getValidGrade(minimumGrade, maximumGrade, kb);
+		double participationGrade = getValidGrade(kb);
 		System.out.println("Please enter a grade for Guided Exploration");
-		double guidedExplorationGrade = getValidGrade(minimumGrade, maximumGrade, kb);
+		double guidedExplorationGrade = getValidGrade(kb);
 		System.out.println("Please enter a grade for Quizzes");
-		double quizzesGrade = getValidGrade(minimumGrade, maximumGrade, kb);
+		double quizzesGrade = getValidGrade(kb);
 		System.out.println("Please enter a grade for Projects");
-		double projectsGrade = getValidGrade(minimumGrade, maximumGrade, kb);
+		double projectsGrade = getValidGrade(kb);
 		System.out.println("Please enter a grade for Final Exam");
-		double finalDemonstrationOfLearningGrade = getValidGrade(minimumGrade, maximumGrade, kb);
+		double finalDemonstrationOfLearningGrade = getValidGrade(kb);
 		double grade = calculateGradeAverage(participationGrade, guidedExplorationGrade, quizzesGrade,
 				projectsGrade, finalDemonstrationOfLearningGrade);
 		
@@ -117,7 +115,9 @@ public class PorterM03Calculations {
 		System.out.println("F: < 60");
 	}
 
-	public static double getValidGrade(int MIN_GRADE, int MAX_GRADE, Scanner kb) {
+	public static double getValidGrade(Scanner kb) {
+		final int MIN_GRADE = 0;
+		final int MAX_GRADE = 105;
 		double grade = 0.0;
 		boolean validGrade = false;
 		while (!validGrade) {

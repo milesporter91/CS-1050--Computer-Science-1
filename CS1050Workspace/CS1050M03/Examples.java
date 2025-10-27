@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 public class Examples {
 	public static void main(String[] args) {
@@ -51,6 +52,15 @@ public class Examples {
 		String startingString = "SquarePants";
 		methodOutputs(startingString);
 		System.out.println("String after method: " + startingString);
+		
+		double[] gradesArrayOne = {95.6, 95.6, 95.6, 95.6, 95.6};
+		double[] gradesArrayTwo = {95.5, 95.4, 95.6, 94.5, 99.9};
+		
+		double maxGradeOne = getMaxGrade(gradesArrayOne);
+		double maxGradeTwo = getMaxGrade(gradesArrayTwo);
+		System.out.println("maxGradeOne = " + maxGradeOne + "\nmaxGradeTwo = " + maxGradeTwo);
+		
+		getRider(48, 10);
 	}
 	
 	public static void methodOutputs(String StringParameterInput) {
@@ -98,5 +108,32 @@ public class Examples {
 		}
 		System.out.println("When n = " + n + ", A's work = " + algorithmA + ", and B's work = " + algorithmB);
 	}
+	
+	public static double getMaxGrade(double[] gradesArray) {
+		double maxGrade = 0.0;
+		for (int i = 0; i < gradesArray.length; i++) {
+			if (gradesArray[i] > maxGrade) {
+				maxGrade = gradesArray[i];
+			}
+		}
+		return maxGrade;
+	}
+	
+	public static void getRider(int minimumHeightInches, int minimumAgeYears) {
+		Scanner input = new Scanner(System.in);
+		int age = 0;
+		int height = 0;
+		while (height < minimumHeightInches || age < minimumAgeYears) {
+			System.out.println("Enter height in inches.");
+			height = input.nextInt();
+			System.out.println("Enter age in years.");
+			age = input.nextInt();
+			if (height < minimumHeightInches || age < minimumAgeYears) {
+				System.out.println("You can not ride.");
+			} // end of if
+		} // end of while
+		System.out.println("You can ride!");
+		input.close();
+	} // end of getRider()
 		
 }
