@@ -13,6 +13,7 @@ public class Examples2 {
 		}
 		
 		// something to commit
+		// something else to commit
 	}
 
 }
