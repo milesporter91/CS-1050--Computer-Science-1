@@ -153,17 +153,12 @@ public class M04PassArraysLab
 	 */
 	public static int[] createArray(int arraySize)
 	{
-		System.out.println("\n** STACK createArray method start** ");
-
 		int[] newArray = new int[arraySize];
 		System.out.println("createArray " + newArray);
 		for (int i = 0; i < newArray.length; i++)
 		{
-
 			newArray[i] = (int) (Math.random() * 10 + 1);
 		}
-		System.out.println("** STACK createArray method end ** \n");
-
 		return newArray;
 	}
 

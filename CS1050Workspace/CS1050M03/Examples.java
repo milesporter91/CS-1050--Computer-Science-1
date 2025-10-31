@@ -56,6 +56,10 @@ public class Examples {
 		double[] gradesArrayOne = {95.6, 95.6, 95.6, 95.6, 95.6};
 		double[] gradesArrayTwo = {95.5, 95.4, 95.6, 94.5, 99.9};
 		
+		double[] gradesArrayThree = new double[5];
+		
+		System.out.println(gradesArrayThree);
+		
 		double maxGradeOne = getMaxGrade(gradesArrayOne);
 		double maxGradeTwo = getMaxGrade(gradesArrayTwo);
 		System.out.println("maxGradeOne = " + maxGradeOne + "\nmaxGradeTwo = " + maxGradeTwo);
