@@ -42,7 +42,7 @@ public class Examples {
 		// For each iteration of outerLoop, innerLoop will iterate 5 times; this should result in 25 lines being printed throughout the loop
 		
 		int sum = sumMethod(5, 2); // passes the values 5 and 2 to the sumMethod, assigns returned value to sum
-		
+		System.out.println(sum);
 		System.out.println(gaussMethod(100));
 		System.out.println(gaussMethod(10));
 		System.out.println(gaussMethod(5));
