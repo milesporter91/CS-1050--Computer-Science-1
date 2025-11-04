@@ -57,7 +57,7 @@ public class PorterGradeCalculationsProject {
 		System.out.println("Grading Categories and Weights");
 		System.out.println("------------------------------");
 		for (int i = 0; i < currentCategories.length; i++) {
-			System.out.printf("%s: %.0f%%%n", currentCategories[i], currentCategoryWeights[i] * 100);
+			System.out.printf("%s: %.0f%%\n", currentCategories[i], currentCategoryWeights[i] * 100);
 		} // end of for loop
 		System.out.println("------------------------------");
 		System.out.println("Grading Scale");
@@ -168,9 +168,9 @@ public class PorterGradeCalculationsProject {
 		double highestGrade = findHighestGrade(classGrades);
 		double lowestGrade = findLowestGrade(classGrades);
 		
-		System.out.printf("Average Grade: %.2f", averageGrade);
-		System.out.printf("Highest Grade: %.2f", highestGrade);
-		System.out.printf("Lowest Grade: %.2f", lowestGrade);
+		System.out.printf("Average Grade: %.2f\n", averageGrade);
+		System.out.printf("Highest Grade: %.2f\n", highestGrade);
+		System.out.printf("Lowest Grade: %.2f\n", lowestGrade);
 	}
 	
 } // end of Class
