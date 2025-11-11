@@ -40,7 +40,8 @@ public class PorterGradeCalculationsProject {
 			System.out.println("Entering grades for student #" + studentNumber);
 			studentCategoryGrades = getCategoryGrades(input, categoryNames, MIN_GRADE, MAX_GRADE);
 			classFinalGrades[i] = calculateFinalGrade(studentCategoryGrades, categoryWeights);
-			printStudentSummary(studentNumber, classFinalGrades[i]);
+			char studentLetterGrade = calculateLetterGrade(classFinalGrades[i]);
+			printStudentSummary(studentNumber, classFinalGrades[i], studentLetterGrade);
 		} // end of for loop
 		
 		// After the final iteration of the loop, the Class Summary will be printed
@@ -122,8 +123,7 @@ public class PorterGradeCalculationsProject {
 	}
 	
 	// Prints a summary of each student's Final Grade, including Student #, Final %, and Letter Grade
-	public static void printStudentSummary(int studentNumber, double studentFinalGrade) {
-		char studentLetterGrade = calculateLetterGrade(studentFinalGrade);
+	public static void printStudentSummary(int studentNumber, double studentFinalGrade, char studentLetterGrade) {
 		System.out.println("---------------------------");
 		System.out.println("Student #" + studentNumber);
 		System.out.printf("Final Percentage: %.2f%%\n", studentFinalGrade);
