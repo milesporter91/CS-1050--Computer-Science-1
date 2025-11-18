@@ -1,0 +1,9 @@
+CS1050
+5
+Participation Exploration Quizzes Project Final
+0.20 0.20 0.20 0.20 0.20
+3
+Stack Exception 95.5 88.4 80.3 87.4 92.3
+Binary Beast 88.9 77.0 105.0 105.0 99.87
+Heap Memory 76.0 67.0 88.0 72.0 66.0
+Try Catch 99.0 98.0 97.0 96.0 95.0

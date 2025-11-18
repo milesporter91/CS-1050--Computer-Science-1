@@ -1,0 +1,10 @@
+CS1030
+3
+Participation Labs Projects 
+0.25 0.25 0.5
+4
+Alex Byte 100.0 92.0 93.5 
+Jordan Loop 80.0 85.0 77.5 
+Casey Node 70.0 60.0 66.5 
+Taylor Stack 95.0 98.0 92.0 
+
