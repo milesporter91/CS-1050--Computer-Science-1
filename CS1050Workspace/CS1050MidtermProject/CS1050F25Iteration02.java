@@ -17,6 +17,7 @@ public class CS1050F25Iteration02 {
 			course.postFinalGrades();
 
 			// 3. Display course information and all results
+			course.displayStudentGrade();
 			course.displayCourseGrading();
 			course.PrintFinalReport();
 			// If a FNF exception is thrown, this line of code will execute instead of
@@ -40,6 +41,7 @@ public class CS1050F25Iteration02 {
 
 			// 3. Display course information and all results
 			course.displayCourseGrading();
+			course.displayStudentGrade();
 			course.PrintFinalReport();
 		} catch (FileNotFoundException exception) {
 			System.out.println("Error: Unable to find file " + INPUT_FILENAME);
@@ -104,7 +106,6 @@ public class CS1050F25Iteration02 {
 			}
 
 			Student student = new Student(firstName, lastName, categoryGrades);
-//			course.setStudent(student);
 			 boolean studentAdded = course.addStudent(student);
 			if (!studentAdded) {
 				System.out.println("Course is full. Can't add " + firstName + " " + lastName);
@@ -129,13 +130,32 @@ class Course {
 		this.courseName = courseName;
 		this.maxStudents = maxStudents;
 		this.categoryNames = categoryNames;
+		this.numberOfCategories = this.categoryNames.length;
 		this.categoryWeights = categoryWeights;
 		this.students = new Student[maxStudents];
 	}
+	
+	public void displayStudentGrade() {
+		for(int i = 0; i < this.students.length; i++) {
+		Student student = this.students[i];
+		System.out.println("---------------------------");
+		System.out.println("Student Name: " + student.getFirstName() + " " + student.getLastName());
+		System.out.printf("Final Percentage: %.2f%%\n", student.getFinalGrade());
+		System.out.println("Final Letter Grade: " + student.getLetterGrade());
+		System.out.println("---------------------------");
+		}
+	}
+
 
 	public void postFinalGrades() {
-		// TODO Auto-generated method stub
-
+		for (int i = 0; i < this.students.length; i++) {
+			double finalGrade = 0.0;
+				for(int j = 0; j < this.numberOfCategories; j++) {
+					finalGrade += this.students[i].getCategoryGrades()[j] * this.categoryWeights[j];
+				} // end of inner for loop
+				this.students[i].setFinalGrade(finalGrade);
+		} // end of outer for loop
+		this.postLetterGrades();
 	}
 
 	public boolean addStudent(Student student) {
@@ -148,6 +168,27 @@ class Course {
 		}
 		return studentAdded;
 	}
+	
+	
+	public void postLetterGrades() {
+		for (int i = 0; i < this.students.length; i++) {
+			char letterGrade = ' ';
+			double studentFinalGrade = this.students[i].getFinalGrade();
+			if (studentFinalGrade >= 90) {
+				letterGrade = 'A';
+			} else if ( studentFinalGrade >= 80 && studentFinalGrade < 90) {
+				letterGrade = 'B';
+			} else if (studentFinalGrade >= 70 && studentFinalGrade < 80) {
+				letterGrade = 'C';
+			} else if (studentFinalGrade >= 60 && studentFinalGrade < 70) {
+				letterGrade = 'D';
+			} else {
+				letterGrade = 'F';
+			} // end of if / else if statements
+			this.students[i].setLetterGrade(letterGrade);
+		}
+	}
+	
 
 	public void PrintFinalReport() {
 		// TODO Auto-generated method stub
@@ -155,8 +196,22 @@ class Course {
 	}
 
 	public void displayCourseGrading() {
-		// TODO Auto-generated method stub
-
+		System.out.println("========================================");
+		System.out.println("CS1050 Final Grade Calculator");
+		System.out.println("========================================");
+		System.out.println("Grading Categories and Weights");
+		System.out.println("------------------------------");
+		for (int i = 0; i < this.categoryNames.length; i++) {
+			System.out.printf("%s: %.0f%%\n", this.categoryNames[i], this.categoryWeights[i] * 100);
+		} // end of for loop
+		System.out.println("------------------------------");
+		System.out.println("Grading Scale");
+		System.out.println("A: 90 or greater");
+		System.out.println("B: 80 - 89.99");
+		System.out.println("C: 70 - 79.99");
+		System.out.println("D: 60-69.99");
+		System.out.println("F: Less than 60");
+		System.out.println("------------------------------");
 	}
 
 	// Getters & Setters
