@@ -15,9 +15,7 @@ public class CS1050F25Iteration02 {
 
 			// 2. Compute final grades for all students
 			course.postFinalGrades();
-
 			// 3. Display course information and all results
-			course.displayStudentGrade();
 			course.displayCourseGrading();
 			course.PrintFinalReport();
 			// If a FNF exception is thrown, this line of code will execute instead of
@@ -38,15 +36,13 @@ public class CS1050F25Iteration02 {
 
 			// 2. Compute final grades for all students
 			course.postFinalGrades();
-
 			// 3. Display course information and all results
 			course.displayCourseGrading();
-			course.displayStudentGrade();
 			course.PrintFinalReport();
 		} catch (FileNotFoundException exception) {
 			System.out.println("Error: Unable to find file " + INPUT_FILENAME);
 		}
-	}
+	} // end of main method
 
 	/**
 	 * Reads course data and student data from the input file. File format: Line 1:
@@ -106,7 +102,7 @@ public class CS1050F25Iteration02 {
 			}
 
 			Student student = new Student(firstName, lastName, categoryGrades);
-			 boolean studentAdded = course.addStudent(student);
+			boolean studentAdded = course.addStudent(student);
 			if (!studentAdded) {
 				System.out.println("Course is full. Can't add " + firstName + " " + lastName);
 			}
@@ -114,10 +110,11 @@ public class CS1050F25Iteration02 {
 
 		fileScanner.close();
 		return course;
-	}
-}
+	} // end of courseSetup method
+} // End of Iteration02 class
 
 class Course {
+	// Instance variables
 	private String courseName;
 	private int numberOfCategories;
 	private String[] categoryNames;
@@ -125,7 +122,11 @@ class Course {
 	private int maxStudents;
 	private Student[] students;
 	private int numberOfStudents;
+	private double classAverage;
+	private double highestGrade;
+	private double lowestGrade;
 
+	// Constructors
 	public Course(String courseName, int maxStudents, String[] categoryNames, double[] categoryWeights) {
 		this.courseName = courseName;
 		this.maxStudents = maxStudents;
@@ -134,33 +135,36 @@ class Course {
 		this.categoryWeights = categoryWeights;
 		this.students = new Student[maxStudents];
 	}
-	
-	public void displayStudentGrade() {
-		for(int i = 0; i < this.students.length; i++) {
-		Student student = this.students[i];
-		System.out.println("---------------------------");
-		System.out.println("Student Name: " + student.getFirstName() + " " + student.getLastName());
-		System.out.printf("Final Percentage: %.2f%%\n", student.getFinalGrade());
-		System.out.println("Final Letter Grade: " + student.getLetterGrade());
-		System.out.println("---------------------------");
+
+	// Instance methods
+	public void displayStudentGrades() {
+		for (int i = 0; i < this.students.length; i++) {
+			Student student = this.students[i];
+			System.out.println("---------------------------");
+			System.out.println("Student Name: " + student.getFirstName() + " " + student.getLastName());
+			System.out.printf("Final Percentage: %.2f%%\n", student.getFinalGrade());
+			System.out.println("Final Letter Grade: " + student.getLetterGrade());
+			System.out.println("---------------------------");
 		}
 	}
-
 
 	public void postFinalGrades() {
 		for (int i = 0; i < this.students.length; i++) {
 			double finalGrade = 0.0;
-				for(int j = 0; j < this.numberOfCategories; j++) {
-					finalGrade += this.students[i].getCategoryGrades()[j] * this.categoryWeights[j];
-				} // end of inner for loop
-				this.students[i].setFinalGrade(finalGrade);
+			for (int j = 0; j < this.numberOfCategories; j++) {
+				finalGrade += this.students[i].getCategoryGrades()[j] * this.categoryWeights[j];
+			} // end of inner for loop
+			this.students[i].setFinalGrade(finalGrade);
+			this.postLetterGrades(i);
 		} // end of outer for loop
-		this.postLetterGrades();
+		this.calculateClassAverage();
+		this.findHighestGrade();
+		this.findLowestGrade();
 	}
 
 	public boolean addStudent(Student student) {
 		boolean studentAdded = false;
-		if(this.numberOfStudents < this.maxStudents && this.students[numberOfStudents] == null) {
+		if (this.numberOfStudents < this.maxStudents && this.students[numberOfStudents] == null) {
 			this.students[numberOfStudents] = student;
 			this.numberOfStudents++;
 			studentAdded = true;
@@ -168,31 +172,55 @@ class Course {
 		}
 		return studentAdded;
 	}
-	
-	
-	public void postLetterGrades() {
-		for (int i = 0; i < this.students.length; i++) {
-			char letterGrade = ' ';
-			double studentFinalGrade = this.students[i].getFinalGrade();
-			if (studentFinalGrade >= 90) {
-				letterGrade = 'A';
-			} else if ( studentFinalGrade >= 80 && studentFinalGrade < 90) {
-				letterGrade = 'B';
-			} else if (studentFinalGrade >= 70 && studentFinalGrade < 80) {
-				letterGrade = 'C';
-			} else if (studentFinalGrade >= 60 && studentFinalGrade < 70) {
-				letterGrade = 'D';
-			} else {
-				letterGrade = 'F';
-			} // end of if / else if statements
-			this.students[i].setLetterGrade(letterGrade);
+
+	public void postLetterGrades(int studentIndex) {
+		char letterGrade = ' ';
+		double studentFinalGrade = this.students[studentIndex].getFinalGrade();
+		if (studentFinalGrade >= 90) {
+			letterGrade = 'A';
+		} else if (studentFinalGrade >= 80 && studentFinalGrade < 90) {
+			letterGrade = 'B';
+		} else if (studentFinalGrade >= 70 && studentFinalGrade < 80) {
+			letterGrade = 'C';
+		} else if (studentFinalGrade >= 60 && studentFinalGrade < 70) {
+			letterGrade = 'D';
+		} else {
+			letterGrade = 'F';
+		} // end of if / else if statements
+		this.students[studentIndex].setLetterGrade(letterGrade);
+	}
+
+	public void calculateClassAverage() {
+		double classAverage = 0.0;
+		for (int i = 0; i < students.length; i++) {
+			classAverage += students[i].getFinalGrade();
+		}
+		this.classAverage = classAverage / this.students.length;
+	}
+
+	public void findHighestGrade() {
+		this.highestGrade = this.students[0].getFinalGrade();
+		for (int i = 1; i < this.students.length; i++) {
+			if (this.students[i].getFinalGrade() > this.highestGrade) {
+				this.highestGrade = this.students[i].getFinalGrade();
+			}
 		}
 	}
-	
+
+	public void findLowestGrade() {
+		this.lowestGrade = this.students[0].getFinalGrade();
+		for (int i = 1; i < this.students.length; i++) {
+			if (this.students[i].getFinalGrade() < this.lowestGrade) {
+				this.lowestGrade = this.students[i].getFinalGrade();
+			}
+		}
+	}
 
 	public void PrintFinalReport() {
-		// TODO Auto-generated method stub
-
+		displayStudentGrades();
+		System.out.printf("Class Average Grade: %.2f\n", this.classAverage);
+		System.out.printf("Class Highest Grade: %.2f\n", this.highestGrade);
+		System.out.printf("Class Lowest Grade: %.2f\n", this.lowestGrade);
 	}
 
 	public void displayCourseGrading() {
@@ -275,7 +303,31 @@ class Course {
 		this.numberOfStudents = numberOfStudents;
 	}
 
-}
+	public double getClassAverage() {
+		return classAverage;
+	}
+
+	public void setClassAverage(double classAverage) {
+		this.classAverage = classAverage;
+	}
+
+	public double getHighestGrade() {
+		return highestGrade;
+	}
+
+	public void setHighestGrade(double highestGrade) {
+		this.highestGrade = highestGrade;
+	}
+
+	public double getLowestGrade() {
+		return lowestGrade;
+	}
+
+	public void setLowestGrade(double lowestGrade) {
+		this.lowestGrade = lowestGrade;
+	}
+
+} // End of Course class
 
 class Student {
 	private double[] categoryGrades;
@@ -332,4 +384,4 @@ class Student {
 		this.letterGrade = letterGrade;
 	}
 
-}
+} // End of Student class
