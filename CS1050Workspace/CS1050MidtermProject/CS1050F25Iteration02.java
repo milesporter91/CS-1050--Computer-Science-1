@@ -139,6 +139,9 @@ class Course {
 	}
 
 	// Instance methods
+	
+	 // Takes a student as an argument, then checks if the current number of students is under the max and if the current index doesnt already contain a student object by checking that it is null
+	 // If those conditions are met, the current index is assigned to the passed student object, and the number of students is incremented. The boolean value is set to true and returned
 	public boolean addStudent(Student student) {
 		boolean studentAdded = false;
 		if (this.numberOfStudents < this.maxStudents && this.students[numberOfStudents] == null) {
@@ -148,7 +151,9 @@ class Course {
 		}
 		return studentAdded;
 	}
-
+	
+	//  Iterates through the array of students up to the current number of students, setting each student's final and letter grade by
+	// calling the appropriate methods to calculate and set each value. After the loop, calculates and sets class average, highest grade, and lowest grade by calling methods
 	public void postFinalGrades() {
 		for (int i = 0; i < this.numberOfStudents; i++) {
 			students[i].setFinalGrade(this.calculateFinalGrade(students[i].getCategoryGrades()));
@@ -159,7 +164,7 @@ class Course {
 		this.setHighestGrade(this.findClassMax());
 		this.setLowestGrade(this.findClassMin());
 	}
-
+	// Prints course grading summary to console: iterates through the arrays of category names and weights and printing their values
 	public void displayCourseGrading() {
 		System.out.println("========================================");
 		System.out.println("CS1050 Final Grade Calculator");
@@ -179,12 +184,16 @@ class Course {
 		System.out.println("------------------------------");
 	}
 
+	// Displays course summary, including top student, class average, highest and lowest grade; Calls findTopStudent method to assign that value to topStudent to be printed out
 	public void displayFinalCourseSummary() {
+		Student topStudent = this.findTopStudent();
+		System.out.printf("Top Student: %s %s (%.2f)\n", topStudent.getFirstName(), topStudent.getLastName(), topStudent.getFinalGrade());
 		System.out.printf("Class Average Grade: %.2f\n", this.classAverage);
 		System.out.printf("Class Highest Grade: %.2f\n", this.highestGrade);
 		System.out.printf("Class Lowest Grade: %.2f\n", this.lowestGrade);
 	}
 
+	// Iterates through the array less than the current number of students and prints each students name, grade percentage, and letter grade
 	public void printFinalReport() {
 		for (int i = 0; i < this.numberOfStudents; i++) {
 			Student student = this.students[i];
@@ -194,10 +203,10 @@ class Course {
 			System.out.println("Final Letter Grade: " + student.getLetterGrade());
 			System.out.println("---------------------------");
 		}
-		Student topStudent = this.findTopStudent();
-		System.out.printf("Top Student: %s %s (%.2f)\n", topStudent.getFirstName(), topStudent.getLastName(), topStudent.getFinalGrade());
 	}
 
+	// Assigns currentLowestGrade to the grade of the student at index 0, then Iterates through the array of students, checking if each student's grade is lower than the current
+	// If it is lower, that value is assigned to currentLowestGrade; Once all values have been checked, the value of currentLowestGrade is returned
 	private double findClassMin() {
 		double currentLowestGrade = this.students[0].getFinalGrade();
 		for (int i = 1; i < this.numberOfStudents; i++) {
@@ -208,6 +217,8 @@ class Course {
 		return currentLowestGrade;
 	}
 
+	// Assigns currentHighestGrade to the grade of the student at index 0, then Iterates through the array of students, checking if each student's grade is higher than the current
+	// If it is higher, that value is assigned to currentHighestGrade; Once all values have been checked, the value of currentHighestGrade is returned
 	private double findClassMax() {
 		double currentHighestGrade = this.students[0].getFinalGrade();
 		for (int i = 1; i < this.numberOfStudents; i++) {
@@ -218,6 +229,8 @@ class Course {
 		return currentHighestGrade;
 	}
 
+	// iterates through the array of students, adding the value of each student's final grade to a double called classAverage. 
+	// Once all values have been added, classAverage is divided by numberOfStudents and assigned to itself. The value of classAverage is then returned
 	private double calculateClassAverage() {
 		double classAverage = 0.0;
 		for (int i = 0; i < this.numberOfStudents; i++) {
@@ -227,6 +240,8 @@ class Course {
 		return classAverage;
 	}
 
+	// Takes an array of doubles called grades as an argument. Iterates through the grades array, multiplying each grade by the categoryWeight at the same index and adding that
+	// value to the double finalGrade. The value of finalGrade is then returned
 	private double calculateFinalGrade(double[] grades) {
 		double finalGrade = 0.0;
 		for (int i = 0; i < grades.length; i++) {
@@ -235,6 +250,8 @@ class Course {
 		return finalGrade;
 	}
 
+	// Takes a double finalGrade as a value and checks if it is within range for each letter grade; 
+	// Assigns the appropriate char to charLetterGrade that matches the range the value falls in
 	private char determineLetterGrades(double finalGrade) {
 		char letterGrade = ' ';
 		if (finalGrade >= 90) {
@@ -251,6 +268,8 @@ class Course {
 		return letterGrade;
 	}
 	
+	// Assigns topStudent to the student at index 0, then Iterates through the array of students, checking if each student's grade is higher than the current
+	// If it is higher, that student is assigned to topStudent; Once all values have been checked, the value of topStudent is returned
 	private Student findTopStudent() {
 		Student topStudent = this.students[0];
 		for (int i = 1; i < this.numberOfStudents; i++) {
